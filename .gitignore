@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+build/
+dist/
+logs/
+data/
+apps-local/
+inbox/
+staging/
+archive/
+*.zip

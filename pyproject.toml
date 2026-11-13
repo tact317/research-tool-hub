@@ -1,0 +1,13 @@
+[project]
+name = "research-tool-hub"
+version = "0.1.0"
+description = "Windows research application launcher and process manager"
+requires-python = ">=3.11"
+dependencies = ["PySide6>=6.7,<7"]
+
+[project.scripts]
+research-tool-hub = "research_tool_hub.__main__:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "id": "radia-to-python-studio",
+  "name": "Radia to Python Studio",
+  "version": "0.9.0",
+  "category": "Radia・磁場解析",
+  "description": "MathematicaのRadiaノートブックをPythonへ変換し、検証・実行・レポート出力するデスクトップ環境。",
+  "tags": ["Radia", "Mathematica", "PySide6"],
+  "application_root": "apps-local/RadiaToPythonStudio",
+  "documentation": "README.md",
+  "dependencies": [
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/run_app.bat",
+      "label": "run_app.bat",
+      "required": true
+    },
+    {
+      "kind": "command",
+      "value": "python",
+      "label": "Python（.venvがない場合）",
+      "required": false
+    }
+  ],
+  "default_profile": "batch",
+  "profiles": {
+    "batch": {
+      "name": "run_app.bat",
+      "processes": [
+        {
+          "id": "desktop",
+          "name": "Radia to Python Studio",
+          "executable": "${APP_ROOT}/run_app.bat",
+          "arguments": [],
+          "working_directory": "${APP_ROOT}",
+          "shell": true
+        }
+      ]
+    },
+    "venv": {
+      "name": "仮想環境から直接起動",
+      "processes": [
+        {
+          "id": "desktop",
+          "name": "Radia to Python Studio",
+          "executable": "${APP_ROOT}/.venv/Scripts/python.exe",
+          "arguments": ["-m", "app.main"],
+          "working_directory": "${APP_ROOT}"
+        }
+      ]
+    }
+  }
+}

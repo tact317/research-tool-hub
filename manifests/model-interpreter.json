@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "id": "model-interpreter",
+  "name": "Model Interpreter",
+  "version": "1.0.0",
+  "category": "COMSOL・モデル解析",
+  "description": "COMSOL Javaエクスポートを機械抽出し、モデル構造・パラメータ・物理設定を説明するReactアプリ。",
+  "tags": ["COMSOL", "React", "Vite"],
+  "application_root": "apps-local/ModelInterpreter",
+  "documentation": "docs/manual.md",
+  "dependencies": [
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/package.json",
+      "label": "package.json",
+      "required": true
+    },
+    {
+      "kind": "command",
+      "value": "npm.cmd",
+      "label": "Node.js / npm",
+      "required": true
+    }
+  ],
+  "default_profile": "development",
+  "profiles": {
+    "development": {
+      "name": "Vite開発サーバー",
+      "processes": [
+        {
+          "id": "frontend",
+          "name": "Vite frontend",
+          "executable": "npm.cmd",
+          "arguments": ["run", "dev", "--", "--host", "127.0.0.1", "--port", "5173"],
+          "working_directory": "${APP_ROOT}"
+        }
+      ],
+      "ready_checks": [
+        {
+          "kind": "http",
+          "target": "http://127.0.0.1:5173/",
+          "timeout_seconds": 40
+        }
+      ],
+      "open_url": "http://127.0.0.1:5173/"
+    },
+    "static-build": {
+      "name": "ビルド済みHTML",
+      "processes": [],
+      "open_path": "${APP_ROOT}/dist/index.html"
+    }
+  }
+}

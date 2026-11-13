@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "id": "paper-translator",
+  "name": "Paper Translator",
+  "version": "0.1.0",
+  "category": "英語・論文",
+  "description": "論文PDFの英文を分割し、日本語訳をローカルLLMで採点するNext.js・FastAPIアプリ。",
+  "tags": ["論文翻訳", "Next.js", "Ollama"],
+  "application_root": "apps-local/PeperTranslator/PeperTranslator",
+  "documentation": "frontend/README.md",
+  "dependencies": [
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/backend/main.py",
+      "label": "FastAPI backend",
+      "required": true
+    },
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/frontend/package.json",
+      "label": "Next.js frontend",
+      "required": true
+    },
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/backend_env/Scripts/python.exe",
+      "label": "同梱Python仮想環境",
+      "required": true
+    },
+    {
+      "kind": "command",
+      "value": "npm.cmd",
+      "label": "Node.js / npm",
+      "required": true
+    },
+    {
+      "kind": "command",
+      "value": "ollama.exe",
+      "label": "Ollama",
+      "required": false
+    }
+  ],
+  "default_profile": "development",
+  "profiles": {
+    "development": {
+      "name": "FastAPI + Next.js",
+      "processes": [
+        {
+          "id": "backend",
+          "name": "FastAPI backend",
+          "executable": "${APP_ROOT}/backend_env/Scripts/python.exe",
+          "arguments": ["-m", "uvicorn", "main:app", "--host", "127.0.0.1", "--port", "8000"],
+          "working_directory": "${APP_ROOT}/backend"
+        },
+        {
+          "id": "frontend",
+          "name": "Next.js frontend",
+          "executable": "npm.cmd",
+          "arguments": ["run", "dev", "--", "-p", "3000"],
+          "working_directory": "${APP_ROOT}/frontend"
+        }
+      ],
+      "ready_checks": [
+        {
+          "kind": "http",
+          "target": "http://127.0.0.1:8000/",
+          "timeout_seconds": 50
+        },
+        {
+          "kind": "http",
+          "target": "http://127.0.0.1:3000/",
+          "timeout_seconds": 70
+        }
+      ],
+      "open_url": "http://127.0.0.1:3000/"
+    }
+  }
+}

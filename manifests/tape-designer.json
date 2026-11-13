@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "id": "tape-designer",
+  "name": "周期構造テープ成形デザイナ",
+  "version": "5.0.0-rc1",
+  "category": "テープ設計",
+  "description": "周期構造テープの形状、送り量、アクチュエータ条件、クリアランスを計算・可視化するWindowsアプリ。",
+  "tags": ["周期構造", "アクチュエータ", "設計計算"],
+  "application_root": "apps-local/TapeDesigner",
+  "documentation": "TapeDesigner_Development_Migration_Recovery_Guide.md",
+  "dependencies": [
+    {
+      "kind": "path",
+      "value": "${APP_ROOT}/dist/TapeDesigner/TapeDesigner.exe",
+      "label": "TapeDesigner.exe",
+      "required": true
+    }
+  ],
+  "default_profile": "portable",
+  "profiles": {
+    "portable": {
+      "name": "Windowsポータブル版",
+      "processes": [
+        {
+          "id": "desktop",
+          "name": "TapeDesigner",
+          "executable": "${APP_ROOT}/dist/TapeDesigner/TapeDesigner.exe",
+          "arguments": [],
+          "working_directory": "${APP_ROOT}/dist/TapeDesigner"
+        }
+      ]
+    }
+  }
+}
